@@ -16,7 +16,8 @@ import py.com.yensei.store.products.entities.Product;
 import py.com.yensei.store.products.repositories.ProductRepository;
 import py.com.yensei.store.products.services.ProductService;
 import py.com.yensei.store.products.services.ProductServiceImpl;
-import py.com.yensei.store.products.services.Status;
+import py.com.yensei.store.utils.constants.Status;
+
 
 @SpringBootTest
 public class ProductServiceMockTest {

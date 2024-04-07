@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import py.com.yensei.store.products.entities.Category;
 import py.com.yensei.store.products.entities.Product;
 import py.com.yensei.store.products.repositories.ProductRepository;
+import py.com.yensei.store.utils.constants.Status;
 
 @Service
 @RequiredArgsConstructor

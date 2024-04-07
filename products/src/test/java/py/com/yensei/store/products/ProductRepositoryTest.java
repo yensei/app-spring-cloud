@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import py.com.yensei.store.products.entities.Category;
 import py.com.yensei.store.products.entities.Product;
 import py.com.yensei.store.products.repositories.ProductRepository;
-import py.com.yensei.store.products.services.Status;
+import py.com.yensei.store.utils.constants.Status;
 
 @DataJpaTest
 public class ProductRepositoryTest {

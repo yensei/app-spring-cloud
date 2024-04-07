@@ -24,7 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import py.com.yensei.store.products.services.Status;
+import py.com.yensei.store.utils.constants.Status;
 
 @Entity
 @Table(name = "tl_prd_product")
