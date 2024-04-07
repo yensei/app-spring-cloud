@@ -1,11 +1,8 @@
 package py.com.yensei.store.products.controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import py.com.yensei.store.utils.response.ResponseUtil;
 
 import jakarta.validation.Valid;
-import py.com.yensei.store.products.domain.ErrorMessage;
+
 import py.com.yensei.store.products.entities.Category;
 import py.com.yensei.store.products.entities.Product;
 import py.com.yensei.store.products.services.ProductService;
@@ -69,7 +65,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product, BindingResult result){
         if(result.hasErrors()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, this.formatMessage(result));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ResponseUtil.formatMessage(result));
         }
         
         Product productCreated = productService.createProduct(product);
@@ -109,31 +105,4 @@ public class ProductController {
         }
         return ResponseEntity.ok(product);
     }
-
-
-    private String formatMessage(BindingResult result){
-        List<Map<String, String>> messages = result.getFieldErrors().stream()
-            .map(err -> {
-                Map<String,String> error = new HashMap<>();
-                error.put(err.getField(), err.getDefaultMessage());
-                return error;
-            }).collect(Collectors.toList());
-        ErrorMessage errorMessage = ErrorMessage.builder()
-            .code("01")
-            .messages(messages)
-            .build();
-
-        // Convert JSON
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonString ="";
-        try {
-            jsonString = mapper.writeValueAsString(errorMessage);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return jsonString;
-
-    }
-
 }
