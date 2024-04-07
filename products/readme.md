@@ -1,18 +1,27 @@
 # Base de datos
 ## Estandar de nombres
-**__[md_tablename]__**
-
+**__[tl_mod_tablename]__**
+* **t**  = Tipo de objeto
 * **md** = modulo, debe tener 2 caracteres
 * **nombre** = nombre relacionado a los datos que contiene
 
+### Tipos de objeto ( a nivel de BD )
+- **tl**  = tablas
+- **tr**  = triggers
+- **pr**  = procedimientos
+- **vw**  = views
+- **fn**  = funciones
+
 ### Modulos
-- **st** = store
-- **cj** = cash = caja
-- **mv** = movimientos 
-- **ac** = accounts = cuentas contables
-- **us** = users =  usuarios
+- **sto** = store
+- **caj** = cash = caja
+- **mov** = movimientos 
+- **acc** = accounts = cuentas contables
+- **usr** = users =  usuarios
+- **cus** = customers
+
 
 ### Tablas 
-#### Modulo Store (Tienda) o negocio
-- **st_product** : 
-- **st_category** : 
+#### Modulo: Productos (Tienda) o negocio
+- **tl_prd_product** : 
+- **tl_prd_category** : 

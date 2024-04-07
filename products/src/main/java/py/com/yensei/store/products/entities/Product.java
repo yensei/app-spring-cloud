@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 import py.com.yensei.store.products.services.Status;
 
 @Entity
-@Table(name = "st_product")
+@Table(name = "tl_prd_product")
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class Product {
 
