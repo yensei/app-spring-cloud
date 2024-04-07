@@ -13,6 +13,6 @@ public interface CustomerService {
 
     public Customer createCustomer(Customer customer);
     public Customer updateCustomer(Customer customer);
-    public Customer deleteCustomer(Customer customer);
-    public Optional<Customer> getCustomer(Long id);
+    public Customer deleteCustomer(Long customerId);
+    public Optional<Customer> getCustomer(Long customerId);
 }

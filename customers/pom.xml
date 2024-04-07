@@ -69,11 +69,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!--My JARs -->
 		<dependency>
 			<groupId>py.com.yensei.store</groupId>
 			<artifactId>utils</artifactId>
 			<version>${yensei-store-utils.version}</version>
 		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
