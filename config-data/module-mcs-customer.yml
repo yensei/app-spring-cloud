@@ -1,6 +1,6 @@
 spring:
   application:
-    name: customer
+    name: customers
   h2:
     console:
       enabled: true
