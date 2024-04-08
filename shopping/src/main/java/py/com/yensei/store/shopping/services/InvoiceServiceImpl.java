@@ -23,7 +23,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice createInvoice(Invoice invoice) {
-        Optional<Invoice> target = Optional.of(invoiceRepository.findByInvoiceNumber(invoice.getNumber()));
+        Optional<Invoice> target = Optional.of(invoiceRepository.findByNumber(invoice.getNumber()));
         if(target.isPresent()){
             return target.get();
         } 
