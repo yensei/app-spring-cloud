@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import py.com.yensei.store.shopping.entities.Invoice;
 import py.com.yensei.store.shopping.repositories.InvoiceRepository;
 import py.com.yensei.store.utils.constants.Status;
 
+@Service
 public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
