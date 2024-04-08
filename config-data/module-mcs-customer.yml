@@ -1,4 +1,6 @@
-spring:
+spring:  
+  jpa:
+    defer-datasource-initialization: true
   application:
     name: customers
   h2:
