@@ -23,9 +23,9 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice createInvoice(Invoice invoice) {
-        Optional<Invoice> target = Optional.of(invoiceRepository.findByNumber(invoice.getNumber()));
-        if(target.isPresent()){
-            return target.get();
+        Invoice invoiceDb = invoiceRepository.findByNumber(invoice.getNumber());
+        if(invoiceDb != null){
+            return invoiceDb;
         } 
 
         invoice.setStatus(Status.CREATED);
