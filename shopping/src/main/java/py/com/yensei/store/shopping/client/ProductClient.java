@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import py.com.yensei.store.shopping.models.Product;
 
-@FeignClient(name = "module-mcs-products" )
+@FeignClient(name = "module-mcs-products", url = "http://localhost:8091/products")
 public interface ProductClient {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id);
