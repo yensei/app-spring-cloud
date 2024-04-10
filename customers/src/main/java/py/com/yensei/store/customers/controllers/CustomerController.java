@@ -27,30 +27,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @Slf4j
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-    
+
     @Autowired
     CustomerService customerService;
-    
+
     @GetMapping
     public ResponseEntity<List<Customer>> listAllCustomers(
-        @RequestParam(name = "regionId", required = false) Long regionId
-    ){  
+            @RequestParam(name = "regionId", required = false) Long regionId) {
         List<Customer> results = new ArrayList<>();
-        if (regionId == null){
+        if (regionId == null) {
             results = customerService.findCustomerAll();
-            if(results.isEmpty()){
+            if (results.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
         } else {
             Region region = new Region();
             region.setId(regionId);
             results = customerService.findCustomersByRegion(region);
-            if(results.isEmpty()){
+            if (results.isEmpty()) {
                 log.warn("Customers con regionId {} no encontrado", regionId);
                 return ResponseEntity.noContent().build();
             }
@@ -65,24 +63,25 @@ public class CustomerController {
         }
 
         Customer customerDB = customerService.createCustomer(customer);
-        log.info("Customer creado con ID {}",customerDB.getId());
+        log.info("Customer creado con ID {}", customerDB.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(customerDB);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id){
+    public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id) {
         Optional<Customer> opt = customerService.getCustomer(id);
-        if(opt.isPresent()){
+        if (opt.isPresent()) {
             log.info("Customer con id {} encontrado", id);
-            return ResponseEntity.ok(opt.get());
+            Customer customer = opt.get();
+            return ResponseEntity.ok(customer);
         }
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer){
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
         Optional<Customer> opt = customerService.getCustomer(id);
-        if(opt.isPresent()){
+        if (opt.isPresent()) {
             customer.setId(id);
             Customer result = customerService.updateCustomer(customer);
             log.info("Customer con id {} modificado", id);
@@ -92,11 +91,10 @@ public class CustomerController {
         return ResponseEntity.notFound().build();
     }
 
-
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") Long id){
+    public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") Long id) {
         Optional<Customer> opt = customerService.getCustomer(id);
-        if(opt.isPresent()){            
+        if (opt.isPresent()) {
             Customer result = customerService.deleteCustomer(id);
             log.info("Customer con id {} borrado", id);
             return ResponseEntity.ok(result);

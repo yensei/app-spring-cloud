@@ -2,11 +2,17 @@ package py.com.yensei.store.shopping.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import py.com.yensei.store.shopping.client.CustomerClient;
+import py.com.yensei.store.shopping.client.ProductClient;
 import py.com.yensei.store.shopping.entities.Invoice;
+import py.com.yensei.store.shopping.entities.InvoiceItem;
+import py.com.yensei.store.shopping.models.Customer;
+import py.com.yensei.store.shopping.models.Product;
 import py.com.yensei.store.shopping.repositories.InvoiceRepository;
 import py.com.yensei.store.utils.constants.Status;
 
@@ -16,6 +22,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
+    @Autowired
+    CustomerClient customerClient;
+
+    @Autowired
+    ProductClient productClient;
+
     @Override
     public List<Invoice> findInvoiceAll() {
         return invoiceRepository.findAll();
@@ -24,12 +36,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public Invoice createInvoice(Invoice invoice) {
         Invoice invoiceDb = invoiceRepository.findByNumber(invoice.getNumber());
-        if(invoiceDb != null){
-            return invoiceDb;
+        if(invoiceDb == null){
+            invoice.setStatus(Status.CREATED);
+            invoiceDb = invoiceRepository.save(invoice);
+            // actualizamos el stock llamando al MCS
+            invoiceDb.getItems().forEach(invoiceItem -> {
+                productClient.updateStockProduct(invoiceItem.getProductId(), invoiceItem.getQuantity()*-1);
+            });
+
         } 
 
-        invoice.setStatus(Status.CREATED);
-        return invoiceRepository.save(invoice);
+
+        return invoiceDb;
     }
 
     @Override
@@ -61,7 +79,20 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public  Optional<Invoice> getInvoice(Long invoiceId) {
         Long id = invoiceId == null ? 0L : invoiceId; // si null , seteamos 0
-        return Optional.of(invoiceRepository.getReferenceById(id));
+        Optional<Invoice> result = Optional.of(invoiceRepository.getReferenceById(id));
+        if(result.isPresent()){
+            Invoice invoice = result.get();
+            Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
+            invoice.setCustomer(customer);
+
+            List<InvoiceItem> listItems = invoice.getItems().stream().map(invoiceItem -> {
+                Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
+                invoiceItem.setProduct(product);
+                return invoiceItem;
+            }).collect(Collectors.toList());
+            invoice.setItems(listItems);
+        }
+        return result;
     }
 
 }

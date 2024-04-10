@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import py.com.yensei.store.shopping.models.Product;
 
 @Data
 @Entity
@@ -44,4 +45,7 @@ public class InvoiceItem implements Serializable{
         this.quantity=0.0;
         this.price=0.0;
     }
+
+    @Transient
+    private Product product;
 }
