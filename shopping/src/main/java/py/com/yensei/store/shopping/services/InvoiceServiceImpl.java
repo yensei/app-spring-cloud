@@ -79,7 +79,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public  Optional<Invoice> getInvoice(Long invoiceId) {
         Long id = invoiceId == null ? 0L : invoiceId; // si null , seteamos 0
-        Optional<Invoice> result = Optional.of(invoiceRepository.getReferenceById(id));
+        Optional<Invoice> result = invoiceRepository.findById(id);
         if(result.isPresent()){
             Invoice invoice = result.get();
             Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
