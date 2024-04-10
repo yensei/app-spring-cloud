@@ -71,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> getCustomer(Long customerId) {
         // Vemos si existe para modificar
         Long id = customerId == null ? 0L : customerId; // para evitar exception por NULL
-        return Optional.of(custormerRespository.getReferenceById(id));
+        return custormerRespository.findById(id);
     }
 
 }
