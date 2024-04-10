@@ -1,6 +1,4 @@
 spring:  
-  application:
-    name: customers
   h2:
     console:
       enabled: true
