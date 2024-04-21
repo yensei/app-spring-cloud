@@ -15,7 +15,7 @@ spring:
       ddl-auto: update
     show-sql: true
 server:
-  port: '8091'
+  port: 8091
   error:
     include-stacktrace: never
 logging:
