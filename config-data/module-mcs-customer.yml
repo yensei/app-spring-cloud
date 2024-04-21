@@ -26,4 +26,8 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8099/eureka
     register-with-eureka: true
-     
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"     
