@@ -8,3 +8,6 @@ spring:
       uri: http://localhost:8888
       username: root
       password: S3CR3T
+  # jackson:
+  #   serialization:
+  #     fail-on-empty-beans: false
