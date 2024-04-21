@@ -1,9 +1,11 @@
 package py.com.yensei.store.shopping.models;
 
+import lombok.Builder;
 import lombok.Data;
 import py.com.yensei.store.utils.constants.Status;
 
 @Data
+@Builder
 public class Customer {
     private Long id;
 

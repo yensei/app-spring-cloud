@@ -8,3 +8,12 @@ spring:
       uri: http://localhost:8888
       username: root
       password: S3CR3T
+    openfeign:
+      circuitbreaker:
+        enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

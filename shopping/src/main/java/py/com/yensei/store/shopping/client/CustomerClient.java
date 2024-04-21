@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import py.com.yensei.store.shopping.models.Customer;
 
-@FeignClient(name = "customers", url = "http://localhost:8092/customers")
+@FeignClient(name = "customers", url = "http://localhost:8092/customers", fallback = CustomerClientFallback.class)
 public interface CustomerClient {
 
 
