@@ -28,3 +28,15 @@ Practica para recordar como utilizar spring cloud
 #### Modulo: Productos (Tienda) o negocio
 - **tl_prd_product** : 
 - **tl_prd_category** : 
+___
+# Docker
+Para utilizar docker se crearon en cada modulo su correspondiente Dockerfile. 
+## Crear contenerdor y deplegar
+1. **Config Server**
+~~~bash
+# Ir a la carpeta del modulo
+cd config-server
+# Docker build & run
+docker build --tag=config-server:latest .
+docker run -p 8888:8888 config-server:latest
+~~~
