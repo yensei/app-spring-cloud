@@ -36,6 +36,8 @@ ___
 docker rm $(docker ps -a -q)
 # Ver logs 
 docker logs <image hash id>
+# Acceder a la consola 
+docker exec -it <image id hash> sh 
  ~~~
 Para utilizar docker se crearon en cada modulo su correspondiente Dockerfile. 
 ## Crear contenerdor y deplegar
