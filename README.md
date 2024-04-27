@@ -3,7 +3,9 @@ Practica para recordar como utilizar spring cloud
 ---
 > **IMPORTANT**
 Se debe agregar al /etc/hosts para pasar los test
+~~~
 127.0.0.1       config-server
+~~~
 ---
 
 # Base de datos
