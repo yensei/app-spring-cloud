@@ -30,13 +30,48 @@ Practica para recordar como utilizar spring cloud
 - **tl_prd_category** : 
 ___
 # Docker
+## Commands Utils
+~~~bash
+# Borrar los contenedores detenidos
+docker rm $(docker ps -a -q)
+# Ver logs 
+docker logs <image hash id>
+ ~~~
 Para utilizar docker se crearon en cada modulo su correspondiente Dockerfile. 
 ## Crear contenerdor y deplegar
 1. **Config Server**
 ~~~bash
 # Ir a la carpeta del modulo
 cd config-server
+# Compilar con maven
+mvn clean package
 # Docker build & run
-docker build --tag=config-server:latest .
-docker run -p 8888:8888 config-server:latest
+docker build --tag=app-spring-cloud/config-server:latest .
+docker run -p 8888:8888 app-spring-cloud/config-server
 ~~~
+2. **Eureka Server**
+~~~bash
+# Ir a la carpeta del modulo
+cd config-server
+# Compilar con maven
+mvn clean package
+# Docker build & run
+docker build --tag=app-spring-cloud/eureka-server:latest .
+# Revisar si la imagen se creo 
+docker images -a
+# Desplegar la imagen
+docker run -p 8099:8099 app-spring-cloud/eureka-server
+~~~
+
+7. **Utilizando docker compose**
+~~~bash
+# Ingresar a la carpeta scripts del root
+cd scrips
+# Levantar los servicios
+docker-compose up
+~~~
+
+## Networking
+Utiliza el tipo de red por defecto
+* Ver si los contenedores se lanzan como bridge
+`docker network inspect bridge`

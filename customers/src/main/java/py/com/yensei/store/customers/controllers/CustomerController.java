@@ -38,6 +38,7 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<List<Customer>> listAllCustomers(
             @RequestParam(name = "regionId", required = false) Long regionId) {
+        log.info("listAllCustormers Called: regionid:{} ",regionId);
         List<Customer> results = new ArrayList<>();
         if (regionId == null) {
             results = customerService.findCustomerAll();
@@ -58,6 +59,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer, BindingResult result) {
+        log.info("createCustomer Called: customer:{} ",customer);
         if (result.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ResponseUtil.formatMessage(result));
         }
@@ -69,6 +71,7 @@ public class CustomerController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id) {
+        log.info("getCustomer Called: id:{} ",id);
         Optional<Customer> opt = customerService.getCustomer(id);
         if (opt.isPresent()) {
             log.info("Customer con id {} encontrado", id);
@@ -80,6 +83,7 @@ public class CustomerController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
+        log.info("updateCustomer Called: id:{} --> customer {}",id,customer);
         Optional<Customer> opt = customerService.getCustomer(id);
         if (opt.isPresent()) {
             customer.setId(id);
@@ -93,6 +97,7 @@ public class CustomerController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") Long id) {
+        log.info("deleteCustomer Called: id:{} ",id);
         Optional<Customer> opt = customerService.getCustomer(id);
         if (opt.isPresent()) {
             Customer result = customerService.deleteCustomer(id);
