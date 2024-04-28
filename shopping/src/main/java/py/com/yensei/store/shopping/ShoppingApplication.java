@@ -28,5 +28,4 @@ public class ShoppingApplication {
 					.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
 					.build());
 	}
-
 }

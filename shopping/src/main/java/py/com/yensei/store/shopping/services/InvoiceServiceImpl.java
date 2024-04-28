@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import py.com.yensei.store.shopping.client.CustomerClient;
 import py.com.yensei.store.shopping.client.ProductClient;
 import py.com.yensei.store.shopping.entities.Invoice;
@@ -17,6 +18,7 @@ import py.com.yensei.store.shopping.repositories.InvoiceRepository;
 import py.com.yensei.store.utils.constants.Status;
 
 @Service
+@Slf4j
 public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
@@ -82,9 +84,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         Optional<Invoice> result = invoiceRepository.findById(id);
         if(result.isPresent()){
             Invoice invoice = result.get();
+            log.debug("executing : customerClient.getCustomer({})", invoiceId);
             Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
             invoice.setCustomer(customer);
-
+            log.debug("result : {}", invoice.getItems());
             List<InvoiceItem> listItems = invoice.getItems().stream().map(invoiceItem -> {
                 Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
                 invoiceItem.setProduct(product);

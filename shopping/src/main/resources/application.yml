@@ -1,3 +1,11 @@
+hostname:
+  customers: localhost
+  products: localhost
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
 spring:
   application:
     name: module-mcs-shopping

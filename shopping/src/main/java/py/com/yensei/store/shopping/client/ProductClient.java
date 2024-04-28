@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import py.com.yensei.store.shopping.config.FeignConfig;
 import py.com.yensei.store.shopping.models.Product;
 
-@FeignClient(name = "module-mcs-products", url = "http://localhost:8091/products")
+@FeignClient(name = "module-mcs-products", url = "http://${hostname.products}:8091/products", configuration = FeignConfig.class)
 public interface ProductClient {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id);
