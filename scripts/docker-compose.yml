@@ -34,6 +34,111 @@ services:
     healthcheck:
       test: ["CMD","wget","--spider", "-S", "http://config-server:8888"]
       interval: 1m30s
-      timeout: 30s
+      timeout: 10s
       retries: 5
       start_period: 30s
+  admin:
+    image: yensei-app-spring-cloud/admin:latest
+    build:
+      context: ../admin
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8086"    
+    depends_on:
+      - config-server
+      - eureka-server      
+    healthcheck:
+      test: ["CMD","wget","--spider", "-S", "http://localhost:8096/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
+  products:
+    image: yensei-app-spring-cloud/products:latest
+    build:
+      context: ../products
+      dockerfile: DockerfileProducts
+    ports:
+      - "8091:8091"    
+    depends_on:
+      - config-server
+      - eureka-server
+      - admin
+    healthcheck:
+      test: ["CMD","wget","--spider", "-S", "http://localhost:8091/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
+  customers:
+    image: yensei-app-spring-cloud/customers:latest
+    build:
+      context: ../customers
+      dockerfile: Dockerfile
+    ports:
+      - "8092:8092"    
+    depends_on:
+      - config-server
+      - eureka-server
+      - admin
+    healthcheck:
+      test: ["CMD","wget","--spider", "-S", "http://localhost:8092/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
+  shopping:
+    image: yensei-app-spring-cloud/shopping:latest
+    build:
+      context: ../shopping
+      dockerfile: Dockerfile
+    ports:
+      - "8093:8093"    
+    depends_on:
+      - config-server
+      - eureka-server
+      - admin
+    healthcheck:
+      test: ["CMD","wget","--spider", "-S", "http://localhost:8093/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
+  gateway:
+    image: yensei-app-spring-cloud/gateway:latest
+    build:
+      context: ../gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"    
+    depends_on:
+      - config-server
+      - eureka-server
+      - admin
+    healthcheck:
+      test: ["CMD","wget","--spider", "-S", "http://localhost:8080/actuator/health"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
+  

@@ -1,0 +1,8 @@
+# Antes de construir requiere utilizar mvn clean package para generar el JAR
+FROM openjdk:17-jdk-alpine
+
+VOLUME /tmp
+
+ADD target/products-*.jar products.jar
+
+ENTRYPOINT [ "java","-Djava.security.egd=file:/dev/./urandom","-jar","/products.jar" ]

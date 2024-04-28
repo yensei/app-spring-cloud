@@ -2,10 +2,12 @@ spring:
   application:
     name: module-mcs-shopping
   config:
-    import: optional:configserver:http://localhost:8888
+    # import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://config-server:8888
   cloud:
     config:
-      uri: http://localhost:8888
+      # uri: http://localhost:8888
+      uri: http://config-server:8888
       username: root
       password: S3CR3T
     openfeign:
@@ -14,7 +16,8 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8086
+        # url: http://localhost:8086
+        url: http://admin:8086
 management:
   endpoints:
     web:
