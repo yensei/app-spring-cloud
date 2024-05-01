@@ -46,6 +46,8 @@ docker rm $(docker ps -a -q)
 docker logs <image hash id>
 # Acceder a la consola 
 docker exec -it <image id hash> sh 
+# Levantar todos los contenedores con docker compose
+docker compose --file 'docker-compose.yml' --project-name 'app-spring-cloud' start 
  ~~~
 Para utilizar docker se crearon en cada modulo su correspondiente Dockerfile. 
 ## Crear contenerdor y deplegar

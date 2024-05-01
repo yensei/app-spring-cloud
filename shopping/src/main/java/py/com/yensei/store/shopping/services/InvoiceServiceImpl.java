@@ -32,7 +32,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<Invoice> findInvoiceAll() {
-        return invoiceRepository.findAll();
+        List<Invoice> invoices = invoiceRepository.findAll();
+        //Agregar los clientes       
+        for (Invoice invoice : invoices) {
+            addProductsAndCustomer(invoice);
+        }
+
+        return invoices;
     }
 
     @Override
@@ -84,18 +90,22 @@ public class InvoiceServiceImpl implements InvoiceService {
         Optional<Invoice> result = invoiceRepository.findById(id);
         if(result.isPresent()){
             Invoice invoice = result.get();
-            log.debug("executing : customerClient.getCustomer({})", invoiceId);
-            Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
-            invoice.setCustomer(customer);
-            log.debug("result : {}", invoice.getItems());
-            List<InvoiceItem> listItems = invoice.getItems().stream().map(invoiceItem -> {
-                Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
-                invoiceItem.setProduct(product);
-                return invoiceItem;
-            }).collect(Collectors.toList());
-            invoice.setItems(listItems);
+            addProductsAndCustomer(invoice);
         }
         return result;
+    }
+
+    private void addProductsAndCustomer(Invoice invoice){
+        log.debug("executing : customerClient.getCustomer({})", invoice.getId());
+        Customer customer = customerClient.getCustomer(invoice.getCustomerId()).getBody();
+        invoice.setCustomer(customer);
+        log.debug("result : {}", invoice.getItems());
+        List<InvoiceItem> listItems = invoice.getItems().stream().map(invoiceItem -> {
+            Product product = productClient.getProduct(invoiceItem.getProductId()).getBody();
+            invoiceItem.setProduct(product);
+            return invoiceItem;
+        }).collect(Collectors.toList());
+        invoice.setItems(listItems);
     }
 
 }
