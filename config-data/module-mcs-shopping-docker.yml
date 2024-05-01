@@ -3,7 +3,7 @@ spring:
     console:
       enabled: true
   datasource:
-    url: 'jdbc:h2:mem:customerDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
+    url: 'jdbc:h2:mem:invoiceDB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
     driver-class-name: org.h2.Driver
     username: sa
   sql:
@@ -17,9 +17,9 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8096
+        url: http://admin:8096
 server:
-  port: 8092
+  port: 8093
   error:
     include-stacktrace: never
 logging:
@@ -28,10 +28,14 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8099/eureka
-    register-with-eureka: true
+      defaultZone: http://eureka-server:8099/eureka
 management:
   endpoints:
     web:
       exposure:
-        include: "*"     
+        include: "*"
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full

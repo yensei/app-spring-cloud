@@ -1,0 +1,17 @@
+# Para pasar los test agregar 127.0.0.1 -> config-server a /etc/hosts 
+hostname:
+  customers: customers
+  products: products
+spring:
+  application:
+    name: module-mcs-shopping
+  config:
+    import: optional:configserver:http://config-server:8888
+  cloud:
+    config:
+      uri: http://config-server:8888
+      username: root
+      password: S3CR3T
+    openfeign:
+      circuitbreaker:
+        enabled: true

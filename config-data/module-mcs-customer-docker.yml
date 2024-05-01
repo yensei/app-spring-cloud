@@ -17,21 +17,23 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8096
+        url: http://admin:8096
 server:
   port: 8092
   error:
     include-stacktrace: never
 logging:
+  level: DEBUG
   pattern:
     console: '"%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:%5p} %m%n"'
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8099/eureka
+      defaultZone: http://eureka-server:8099/eureka
     register-with-eureka: true
 management:
   endpoints:
     web:
       exposure:
-        include: "*"     
+        include: "*"
+  

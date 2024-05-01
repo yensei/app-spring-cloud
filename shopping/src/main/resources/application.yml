@@ -1,21 +1,16 @@
+# Para pasar los test agregar 127.0.0.1 -> config-server a /etc/hosts
+# Para pasar el test de H2 se debe tener desplegado config-server en localhost, o de lo contrario traer la config aqui
 hostname:
   customers: localhost
   products: localhost
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: full
 spring:
   application:
     name: module-mcs-shopping
   config:
-    # import: optional:configserver:http://localhost:8888
-    import: optional:configserver:http://config-server:8888
+    import: optional:configserver:http://localhost:8888
   cloud:
     config:
-      # uri: http://localhost:8888
-      uri: http://config-server:8888
+      uri: http://localhost:8888
       username: root
       password: S3CR3T
     openfeign:
@@ -24,11 +19,4 @@ spring:
   boot:
     admin:
       client:
-        # url: http://localhost:8086
-        url: http://admin:8086
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
+        url: http://localhost:8086
