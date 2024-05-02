@@ -18,6 +18,8 @@ spring:
     admin:
       client:
         url: http://localhost:8096
+  zipkin:
+    baseUrl: http://localhost:9411
 server:
   port: 8093
   error:
