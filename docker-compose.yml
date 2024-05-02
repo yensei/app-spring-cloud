@@ -134,7 +134,6 @@ services:
     depends_on:
       - config-server
       - eureka-server
-      - admin
     healthcheck:
       test: ["CMD","wget","--spider", "-S", "http://localhost:8080/actuator/health"]
       interval: 1m30s

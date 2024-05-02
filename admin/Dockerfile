@@ -3,5 +3,5 @@ FROM openjdk:17-jdk-alpine
 # RUN apk add curl --no-cache
 VOLUME /tmp
 ADD target/admin-*.jar admin.jar
-RUN sh -c 'touch /admin.jar'
+
 ENTRYPOINT [ "java","-Djava.security.egd=file:/dev/./urandom","-jar","/admin.jar" ]
