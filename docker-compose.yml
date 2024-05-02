@@ -20,12 +20,7 @@ services:
       - "8099:8099"
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8888
-      # SPRING_APPLICATION_NAME: eureka-service
-      # SPRING_CLOUD_CONFIG_USERNAME: root
-      # SPRING_CLOUD_CONFIG_PASSWORD: S3CR3T
-      # SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
-      # EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
-      #  SPRING_APPLICATION_JSON: '{"eureka":{"client":{"serviceUrl":{"defaultZone":"http://eureka-server:8099/eureka"}}}}'
+      SPRING_PROFILES_ACTIVE: docker
     links:
       - config-server
     depends_on:
@@ -143,6 +138,7 @@ services:
     restart: on-failure
     environment:
       SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      SPRING_PROFILES_ACTIVE: docker
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8099/eureka
   zipkin:
     image: openzipkin/zipkin
