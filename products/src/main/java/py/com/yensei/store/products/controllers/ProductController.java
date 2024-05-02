@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import py.com.yensei.store.utils.response.ResponseUtil;
 
 import jakarta.validation.Valid;
-
+import lombok.extern.slf4j.Slf4j;
 import py.com.yensei.store.products.entities.Category;
 import py.com.yensei.store.products.entities.Product;
 import py.com.yensei.store.products.services.ProductService;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping (value = "/products")
+@Slf4j
 public class ProductController {
 
     @Autowired
@@ -38,6 +39,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> listProduct(
             @RequestParam(name="category_id", required=false) Long categoryId){
+        log.info("listProduct Called: categoryId:{} ",categoryId);                
         List<Product> products = new ArrayList<>();
         if(categoryId!=null){
             products = productService.findByCategory(Category.builder().id(categoryId).build());
@@ -54,6 +56,7 @@ public class ProductController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id){
+        log.info("getProduct Called: id:{} ",id);          
         Optional<Product> product = productService.getProduct(id);
             
         if(product.isPresent()){
@@ -64,6 +67,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product, BindingResult result){
+        log.info("createProduct Called: product:{} ",product);          
         if(result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ResponseUtil.formatMessage(result));
         }
@@ -76,6 +80,7 @@ public class ProductController {
 
     @PutMapping(value="/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
+        log.info("updateProduct Called: id:{} ; product:{} ",id, product);          
         product.setId(id);
         Product updatedProduct = productService.updateProduct(product);
         if(updatedProduct== null) {
@@ -87,7 +92,8 @@ public class ProductController {
 
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id){
+    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id){
+        log.info("deleteProduct Called: id:{} ",id);  
         Product deletedProduct = productService.deleteProduct(id);
         if(deletedProduct== null) {
             return ResponseEntity.notFound().build();
@@ -98,6 +104,7 @@ public class ProductController {
 
     @PatchMapping(value="/{id}/stock")
     public ResponseEntity<Product> updateStockProduct(@PathVariable("id") Long id, @RequestParam(name="quantity", required = true) Double quantity){
+        log.info("updateStockProduct Called: id:{} ; quantity:{}",id, quantity);  
         Product product = productService.updateStock(id, quantity);
 
         if(product== null) {

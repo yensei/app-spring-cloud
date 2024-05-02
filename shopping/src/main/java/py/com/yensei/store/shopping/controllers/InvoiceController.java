@@ -34,6 +34,7 @@ public class InvoiceController {
     // -------------------Retrieve All Invoices--------------------------------------------
     @GetMapping
     public ResponseEntity<List<Invoice>> listAllInvoices() {
+        log.info("listAllInvoices was called");
         List<Invoice> invoices = invoiceService.findInvoiceAll();
         if (invoices.isEmpty()) {
             return  ResponseEntity.noContent().build();
@@ -44,7 +45,7 @@ public class InvoiceController {
     // -------------------Retrieve Single Invoice------------------------------------------
     @GetMapping(value = "/{id}")
     public ResponseEntity<Invoice> getInvoice(@PathVariable("id") long id) {
-        log.debug("Fetching Invoice with id {}", id);
+        log.info("getInvoice was called= id:{}", id);
         Optional<Invoice> target  = invoiceService.getInvoice(id);
         if (target.isPresent()) {
             return  ResponseEntity.ok(target.get());
@@ -56,7 +57,7 @@ public class InvoiceController {
     // -------------------Create a Invoice-------------------------------------------
     @PostMapping
     public ResponseEntity<Invoice> createInvoice(@Valid @RequestBody Invoice invoice, BindingResult result) {
-        log.debug("Creating Invoice : {}", invoice);
+        log.info("createInvoice was called= invoice:{}", invoice);
         if (result.hasErrors()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ResponseUtil.formatMessage(result));
         }
@@ -67,7 +68,7 @@ public class InvoiceController {
     // ------------------- Update a Invoice ------------------------------------------------
     @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateInvoice(@PathVariable("id") long id, @RequestBody Invoice invoice) {
-        log.debug("Updating Invoice with id {}", id);
+        log.info("updateInvoice was called= id:{} ; invoice:{}", id, invoice);
 
         invoice.setId(id);
         Invoice currentInvoice=invoiceService.updateInvoice(invoice);
@@ -82,6 +83,7 @@ public class InvoiceController {
     // ------------------- Delete a Invoice-----------------------------------------
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Invoice> deleteInvoice(@PathVariable("id") long id) {
+        log.info("deleteInvoice was called= id:{}",id);
       
         Invoice invoice = invoiceService.deleteInvoice(id);
         if(invoice == null) {
