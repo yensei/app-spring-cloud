@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   config-server:
     image: yensei-app-spring-cloud/config-server:latest
@@ -125,12 +124,12 @@ services:
       context: ./gateway
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"    
+      - "8090:8090"    
     depends_on:
       - config-server
       - eureka-server
     healthcheck:
-      test: ["CMD","wget","--spider", "-S", "http://localhost:8080/actuator/health"]
+      test: ["CMD","wget","--spider", "-S", "http://localhost:8090/actuator/health"]
       interval: 1m30s
       timeout: 10s
       retries: 3
